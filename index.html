@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story — Now Streaming</title>
+<link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --red:#E50914;
+  --bg:#141414;
+  --surface:#1f1f1f;
+  --surface2:#2a2a2a;
+  --text:#ffffff;
+  --text-muted:#b3b3b3;
+  --text-dim:#808080;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* ── NAVBAR ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 4%;display:flex;align-items:center;gap:2rem;background:linear-gradient(to bottom,rgba(0,0,0,0.9) 0%,transparent 100%);}
+.logo{color:var(--red);font-size:28px;font-weight:900;letter-spacing:-1px;font-family:'Inter',sans-serif;flex-shrink:0;}
+.logo span{font-style:italic;}
+.nav-links{display:flex;gap:1.2rem;}
+.nav-links a{color:var(--text-muted);font-size:14px;text-decoration:none;cursor:default;}
+.nav-links a:hover{color:var(--text);}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:1rem;}
+.nav-avatar{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;cursor:pointer;}
+
+/* ── HERO ── */
+.hero{position:relative;width:100%;height:95vh;min-height:560px;display:flex;align-items:flex-end;padding:0 4% 6%;}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.9) 30%,rgba(0,0,0,0.2) 80%),linear-gradient(to top,rgba(20,20,20,1) 0%,rgba(20,20,20,0.4) 30%,transparent 60%),linear-gradient(135deg,#1a0a0a 0%,#0d0d1a 40%,#1a0a1a 70%,#0a1a0d 100%);}
+.hero-hearts{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.floating-heart{position:absolute;opacity:0;animation:floatHeart linear infinite;}
+@keyframes floatHeart{0%{transform:translateY(100vh) scale(0.5);opacity:0;}10%{opacity:0.15;}90%{opacity:0.08;}100%{transform:translateY(-10vh) scale(1.2);opacity:0;}}
+.hero-content{position:relative;z-index:2;max-width:550px;}
+.hero-badge{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.hero-badge-text{background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;letter-spacing:1px;text-transform:uppercase;}
+.hero-badge-sub{color:var(--text-muted);font-size:12px;}
+.hero-title{font-size:clamp(42px,7vw,72px);font-weight:800;line-height:1.0;letter-spacing:-2px;margin-bottom:6px;}
+.hero-title .accent{color:var(--red);}
+.hero-tagline{font-size:clamp(13px,2vw,16px);color:var(--text-muted);font-style:italic;margin-bottom:6px;font-weight:300;}
+.hero-meta{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+.meta-match{color:#46d369;font-weight:700;font-size:14px;}
+.meta-year{color:var(--text-muted);font-size:13px;}
+.meta-seasons{border:1px solid var(--text-muted);color:var(--text-muted);font-size:11px;padding:1px 6px;}
+.meta-hd{border:1px solid var(--text-muted);color:var(--text-muted);font-size:10px;padding:1px 5px;letter-spacing:1px;}
+.hero-desc{font-size:clamp(13px,1.6vw,15px);color:#e0e0e0;line-height:1.7;margin-bottom:22px;max-width:480px;}
+.hero-desc em{color:#fff;font-style:normal;font-weight:500;}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;}
+.btn-play{background:#fff;color:#000;border:none;padding:10px 24px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;border-radius:4px;font-family:'Inter',sans-serif;transition:background 0.15s;}
+.btn-play:hover{background:rgba(255,255,255,0.85);}
+.btn-play svg{flex-shrink:0;}
+.btn-more{background:rgba(109,109,110,0.7);color:#fff;border:none;padding:10px 22px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;border-radius:4px;font-family:'Inter',sans-serif;transition:background 0.15s;}
+.btn-more:hover{background:rgba(109,109,110,0.9);}
+
+/* ── EPISODES ── */
+.section{padding:0 4% 3rem;}
+.section-title{font-size:20px;font-weight:600;margin-bottom:16px;color:var(--text);}
+.episodes-list{display:flex;flex-direction:column;gap:0;}
+.ep{display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.08);cursor:pointer;transition:background 0.15s;border-radius:4px;}
+.ep:hover{background:rgba(255,255,255,0.04);}
+.ep:hover .ep-play{opacity:1;}
+.ep-num{color:var(--text-dim);font-size:22px;font-weight:300;width:32px;flex-shrink:0;text-align:center;padding-top:2px;}
+.ep-thumb{width:130px;height:73px;background:var(--surface2);border-radius:4px;flex-shrink:0;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.ep-thumb-bg{position:absolute;inset:0;opacity:0.6;}
+.ep-thumb-emoji{font-size:28px;position:relative;z-index:1;}
+.ep-play{position:absolute;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.15s;z-index:2;}
+.ep-play svg{width:32px;height:32px;}
+.ep-info{flex:1;min-width:0;}
+.ep-header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px;}
+.ep-name{font-size:14px;font-weight:500;color:var(--text);}
+.ep-duration{color:var(--text-dim);font-size:13px;flex-shrink:0;}
+.ep-desc{font-size:13px;color:var(--text-muted);line-height:1.6;}
+
+/* ── CAST ── */
+.cast-grid{display:flex;gap:16px;flex-wrap:wrap;}
+.cast-card{display:flex;flex-direction:column;align-items:center;gap:10px;width:120px;cursor:pointer;}
+.cast-card:hover .cast-img{border-color:var(--text);}
+.cast-img{width:90px;height:90px;border-radius:50%;border:2px solid transparent;overflow:hidden;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:32px;transition:border-color 0.15s;}
+.cast-name{font-size:13px;font-weight:500;text-align:center;}
+.cast-role{font-size:11px;color:var(--text-muted);text-align:center;line-height:1.4;}
+
+/* ── DETAILS ── */
+.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 2rem;max-width:500px;}
+.detail-label{color:var(--text-dim);font-size:13px;}
+.detail-val{color:var(--text-muted);font-size:13px;}
+.detail-val a{color:var(--text-muted);}
+
+/* ── MORE LIKE THIS ── */
+.more-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+.more-card{border-radius:4px;overflow:hidden;cursor:pointer;position:relative;}
+.more-card:hover .more-overlay{opacity:1;}
+.more-thumb{width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:32px;position:relative;}
+.more-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.6);display:flex;flex-direction:column;justify-content:flex-end;padding:10px;opacity:0;transition:opacity 0.2s;}
+.more-title{font-size:12px;font-weight:600;}
+.more-sub{font-size:10px;color:var(--text-muted);}
+
+/* ── LOVE LETTER MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.modal-overlay.show{opacity:1;pointer-events:all;}
+.modal{background:#181818;border-radius:6px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(30px);transition:transform 0.3s;}
+.modal-overlay.show .modal{transform:translateY(0);}
+.modal-hero{width:100%;height:200px;background:linear-gradient(135deg,#1a0a0a,#1a0a1a,#0a1a0d);display:flex;align-items:center;justify-content:center;font-size:56px;position:relative;}
+.modal-hero-text{position:absolute;bottom:16px;left:20px;}
+.modal-hero-text h2{font-size:22px;font-weight:700;}
+.modal-hero-text p{font-size:13px;color:var(--text-muted);}
+.modal-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.7);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:3;}
+.modal-body{padding:20px 24px 28px;}
+.modal-meta{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.modal-match{color:#46d369;font-weight:700;font-size:14px;}
+.modal-year{color:var(--text-muted);font-size:13px;}
+.modal-btns{display:flex;gap:10px;margin-bottom:18px;}
+.modal-btn-play{background:#fff;color:#000;border:none;padding:8px 20px;font-size:14px;font-weight:700;cursor:pointer;border-radius:4px;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px;}
+.modal-btn-list{background:rgba(109,109,110,0.5);color:#fff;border:2px solid rgba(255,255,255,0.4);padding:8px 16px;font-size:14px;font-weight:600;cursor:pointer;border-radius:4px;font-family:'Inter',sans-serif;}
+.modal-desc{font-size:14px;color:#e0e0e0;line-height:1.8;margin-bottom:14px;}
+.modal-desc em{color:#fff;font-style:normal;font-weight:500;}
+.modal-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.modal-tag{font-size:12px;color:var(--text-muted);border:1px solid #444;padding:2px 10px;border-radius:2px;}
+
+/* ── EP MODAL ── */
+.ep-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:300;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.ep-modal-overlay.show{opacity:1;pointer-events:all;}
+.ep-modal{background:#181818;border-radius:6px;max-width:500px;width:100%;padding:28px 24px;position:relative;text-align:center;transform:scale(0.95);transition:transform 0.3s;}
+.ep-modal-overlay.show .ep-modal{transform:scale(1);}
+.ep-modal-emoji{font-size:52px;margin-bottom:14px;display:block;}
+.ep-modal-ep{color:var(--red);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.ep-modal-title{font-size:20px;font-weight:700;margin-bottom:14px;}
+.ep-modal-desc{font-size:14px;color:#ccc;line-height:1.8;margin-bottom:20px;}
+.ep-modal-close{background:rgba(109,109,110,0.5);color:#fff;border:none;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;border-radius:4px;font-family:'Inter',sans-serif;}
+
+/* ── BIRTHDAY FINALE ── */
+#birthday-finale{position:fixed;inset:0;background:#0a0004;z-index:500;display:none;align-items:center;justify-content:center;flex-direction:column;gap:20px;text-align:center;padding:2rem;}
+#birthday-finale.show{display:flex;}
+.finale-logo{color:var(--red);font-size:32px;font-weight:900;font-style:italic;margin-bottom:8px;}
+.finale-title{font-size:clamp(28px,6vw,52px);font-weight:800;line-height:1.1;letter-spacing:-1px;}
+.finale-sub{font-size:clamp(14px,2.5vw,18px);color:#ccc;font-weight:300;font-style:italic;font-family:Georgia,serif;line-height:1.7;max-width:520px;}
+.finale-sub em{color:#fff;font-style:normal;}
+.finale-heart{font-size:56px;animation:heartbeat 1.2s ease-in-out infinite;}
+@keyframes heartbeat{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+.finale-sign{font-size:16px;color:#e8b4b8;font-style:italic;font-family:Georgia,serif;margin-top:8px;}
+.finale-close{background:transparent;border:1px solid #444;color:#aaa;padding:8px 20px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;border-radius:4px;margin-top:8px;}
+.finale-close:hover{border-color:#fff;color:#fff;}
+
+/* ── UTILS ── */
+.divider{height:1px;background:rgba(255,255,255,0.08);margin:0 0 2.5rem;}
+@media(max-width:600px){
+  .hero{height:80vh;padding-bottom:4%;}
+  .hero-title{letter-spacing:-1px;}
+  .ep-thumb{width:90px;height:50px;}
+  .details-grid{grid-template-columns:1fr;}
+  .cast-grid{gap:10px;}
+  .cast-card{width:90px;}
+  .cast-img{width:70px;height:70px;}
+  nav .nav-links{display:none;}
+}
+
+/* ── NETFLIX INTRO ── */
+#intro-screen{
+  position:fixed;inset:0;background:#000;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+#intro-screen.fade-out{animation:introFadeOut 0.8s ease forwards;}
+@keyframes introFadeOut{to{opacity:0;pointer-events:none;}}
+
+.intro-logo-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
+
+/* The ribbon bars — animate in like real Netflix */
+.intro-bar-left,
+.intro-bar-right{
+  position:absolute;
+  width:18px;height:110px;
+  background:var(--red);
+  top:50%;transform:translateY(-50%);
+  opacity:0;
+}
+.intro-bar-left{left:-28px;animation:barSlideLeft 0.35s ease 0.1s forwards;}
+.intro-bar-right{right:-28px;animation:barSlideRight 0.35s ease 0.1s forwards;}
+@keyframes barSlideLeft{from{opacity:0;transform:translateY(-50%) scaleY(0);}to{opacity:1;transform:translateY(-50%) scaleY(1);}}
+@keyframes barSlideRight{from{opacity:0;transform:translateY(-50%) scaleY(0);}to{opacity:1;transform:translateY(-50%) scaleY(1);}}
+
+.intro-logo-text{
+  color:var(--red);
+  font-size:clamp(52px,12vw,96px);
+  font-weight:900;
+  font-family:'Inter',sans-serif;
+  letter-spacing:-3px;
+  opacity:0;
+  animation:logoReveal 0.5s cubic-bezier(0.2,0,0.2,1) 0.2s forwards;
+  text-shadow:
+    0 0 40px rgba(229,9,20,0.5),
+    0 0 80px rgba(229,9,20,0.2);
+  position:relative;z-index:1;
+}
+.intro-logo-text span{font-style:italic;}
+@keyframes logoReveal{
+  from{opacity:0;transform:scale(1.3);}
+  to{opacity:1;transform:scale(1);}
+}
+
+/* Shadow sweep under logo — mimics the real Netflix glow */
+.intro-shadow{
+  position:absolute;
+  bottom:-30px;left:50%;transform:translateX(-50%);
+  width:200%;height:60px;
+  background:radial-gradient(ellipse at center,rgba(229,9,20,0.25) 0%,transparent 70%);
+  opacity:0;
+  animation:shadowIn 0.6s ease 0.4s forwards;
+}
+@keyframes shadowIn{to{opacity:1;}}
+
+.intro-tagline{
+  position:absolute;
+  bottom:-56px;left:50%;transform:translateX(-50%);
+  color:rgba(255,255,255,0.35);
+  font-size:12px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  white-space:nowrap;
+  opacity:0;
+  animation:taglineIn 0.5s ease 0.7s forwards;
+}
+@keyframes taglineIn{to{opacity:1;}}
+
+.intro-skip{
+  position:absolute;bottom:32px;right:32px;
+  color:rgba(255,255,255,0.3);font-size:11px;
+  font-family:'Inter',sans-serif;letter-spacing:2px;
+  animation:blink 2s step-end infinite;
+}
+
+/* ── PROFILE SCREEN ── */
+#profile-screen{
+  position:fixed;inset:0;background:#141414;z-index:9998;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:2.5rem;padding:2rem;
+  opacity:0;transition:opacity 0.5s ease;
+}
+#profile-screen.visible{display:flex;}
+#profile-screen.show{opacity:1;}
+.profile-heading{
+  color:#fff;font-size:clamp(22px,4vw,34px);font-weight:400;
+  font-family:'Inter',sans-serif;text-align:center;
+}
+.profiles-row{
+  display:flex;gap:clamp(16px,4vw,40px);align-items:flex-start;justify-content:center;flex-wrap:wrap;
+}
+.profile-card{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  cursor:pointer;
+}
+.profile-card:hover .profile-avatar{border:3px solid #fff;transform:scale(1.05);}
+.profile-card:hover .profile-name{color:#fff;}
+.profile-avatar{
+  width:clamp(80px,14vw,130px);
+  height:clamp(80px,14vw,130px);
+  border-radius:6px;border:3px solid transparent;
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(36px,7vw,58px);
+  transition:border-color 0.15s,transform 0.15s;
+  position:relative;overflow:hidden;
+}
+.profile-name{
+  color:#b3b3b3;font-size:clamp(13px,2vw,16px);
+  font-family:'Inter',sans-serif;font-weight:400;
+  transition:color 0.15s;text-align:center;
+}
+.profile-tag{
+  font-size:10px;color:#666;font-family:'Inter',sans-serif;
+  text-align:center;margin-top:-8px;
+}
+
+/* selected flash */
+.profile-card.selected .profile-avatar{
+  animation:profileSelect 0.35s ease forwards;
+}
+@keyframes profileSelect{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.12);}
+  100%{transform:scale(1);}
+}
+
+/* welcome toast */
+#profile-toast{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:rgba(0,0,0,0.92);
+  border:1px solid #333;
+  padding:1.5rem 2.5rem;
+  text-align:center;
+  z-index:10000;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.3s;
+  border-radius:4px;
+  min-width:260px;
+}
+#profile-toast.show{opacity:1;}
+#profile-toast-emoji{font-size:40px;display:block;margin-bottom:10px;}
+#profile-toast-msg{color:#fff;font-size:15px;font-family:'Inter',sans-serif;line-height:1.6;}
+/* ── BIRTHDAY WARNING CARD ── */
+#warning-section{padding:0 4% 3rem;}
+.warning-outer{
+  max-width:700px;
+  border:1px solid #333;
+  border-radius:6px;
+  overflow:hidden;
+  background:#181818;
+}
+.warning-header{
+  background:#141414;
+  border-bottom:1px solid #2a2a2a;
+  padding:14px 20px;
+  display:flex;align-items:center;gap:12px;
+}
+.warning-header-logo{
+  color:var(--red);font-size:15px;font-weight:900;
+  font-family:'Inter',sans-serif;letter-spacing:-0.5px;
+  flex-shrink:0;
+}
+.warning-header-title{
+  color:#aaa;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+}
+.warning-body{padding:24px 20px 20px;}
+.warning-label{
+  display:inline-block;
+  border:2px solid #e5b200;color:#e5b200;
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  padding:3px 10px;margin-bottom:16px;
+}
+.warning-title{
+  font-size:clamp(18px,3vw,24px);font-weight:700;
+  color:#fff;margin-bottom:12px;line-height:1.3;
+}
+.warning-advisories{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;
+}
+.advisory{
+  border:1px solid #444;color:#ccc;
+  font-size:11px;padding:4px 12px;border-radius:2px;
+  font-family:'Inter',sans-serif;
+}
+.warning-desc{
+  color:#aaa;font-size:13px;line-height:1.9;
+  border-top:1px solid #2a2a2a;padding-top:16px;
+  margin-bottom:18px;
+}
+.warning-desc strong{color:#fff;}
+.warning-reveal-btn{
+  background:var(--red);color:#fff;border:none;
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
+  padding:10px 24px;cursor:pointer;border-radius:3px;
+  display:flex;align-items:center;gap:8px;
+  transition:background 0.15s;
+}
+.warning-reveal-btn:hover{background:#c0070f;}
+
+/* the actual message — hidden until revealed */
+.birthday-message-card{
+  display:none;
+  border-top:1px solid #2a2a2a;
+  padding:24px 20px 20px;
+  animation:msgReveal 0.6s ease forwards;
+}
+@keyframes msgReveal{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.birthday-message-card.show{display:block;}
+.msg-from{
+  color:var(--red);font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;
+}
+.msg-text{
+  font-size:clamp(14px,2vw,16px);color:#e8e8e8;
+  line-height:2;font-family:Georgia,serif;font-style:italic;
+}
+.msg-text p{margin-bottom:1.1rem;}
+.msg-text em{color:#fff;font-style:normal;font-weight:500;}
+.msg-sign{
+  color:#e8b4b8;font-size:15px;font-family:Georgia,serif;
+  font-style:italic;margin-top:18px;text-align:right;
+}
+.msg-hearts{
+  text-align:center;font-size:22px;letter-spacing:8px;
+  margin-top:16px;color:#c0607a;
+}
+
+/* VIDEO PLAYER */
+.video-modal{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;justify-content:center;align-items:center;z-index:10001;}
+.video-modal video{width:85%;max-height:85vh;border-radius:10px;}
+.close-video{position:absolute;top:20px;right:35px;color:#fff;font-size:42px;cursor:pointer;font-family:Arial;}
+
+</style>
+<body>
+
+<!-- NETFLIX INTRO SCREEN -->
+<div id="intro-screen" onclick="skipIntro()">
+  <div class="intro-logo-wrap">
+    <div class="intro-bar-left"></div>
+    <div class="intro-bar-right"></div>
+    <div class="intro-logo-text">SHRUTI<span>FLIX</span></div>
+    <div class="intro-shadow"></div>
+    <div class="intro-tagline">a shruti original production</div>
+  </div>
+  <div class="intro-skip">tap to skip</div>
+</div>
+
+<!-- PROFILE SELECTION SCREEN -->
+<div id="profile-screen">
+  <h1 class="profile-heading">Who's watching?</h1>
+  <div class="profiles-row">
+
+    <div class="profile-card" onclick="selectProfile('chandrajeet')">
+      <div class="profile-avatar" style="background:linear-gradient(135deg,#1a1a4a,#2a1a3a);">🧑‍💼</div>
+      <div class="profile-name">Chandrajeet</div>
+      <div class="profile-tag">⭐ Main Character</div>
+    </div>
+
+    <div class="profile-card" onclick="selectProfile('shruti')">
+      <div class="profile-avatar" style="background:linear-gradient(135deg,#3a0a1a,#1a0a2a);">👩</div>
+      <div class="profile-name">Shruti</div>
+      <div class="profile-tag">🎬 Creator & Yapper</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PROFILE WELCOME TOAST -->
+<div id="profile-toast">
+  <span id="profile-toast-emoji">👋</span>
+  <div id="profile-toast-msg">Welcome!</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">SHRUTI<span>FLIX</span></div>
+  <div class="nav-links">
+    <a>Home</a><a>Our Story</a><a>Memories</a><a>For Chandrajeet</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-avatar">C</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-hearts" id="hero-hearts"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-text">ShrutiFlix Original</span>
+      <span class="hero-badge-sub">★ Shruti's #1 Pick</span>
+    </div>
+    <h1 class="hero-title">Our<br><span class="accent">Story</span></h1>
+    <p class="hero-tagline">Starring Chandrajeet & Shruti — now in its 2nd season</p>
+    <div class="hero-meta">
+      <span class="meta-match">Shruti's #1 Pick</span>
+      <span class="meta-year">2023–Present</span>
+      <span class="meta-seasons">2 Seasons</span>
+      <span class="meta-hd">LOVE</span>
+    </div>
+    <p class="hero-desc">
+      Two people, countless memories, and a love that grew stronger with every passing day. Through every smile, every misunderstanding, every goodbye, and every reunion, they kept choosing each other. Because sometimes, love isn't about grand gestures—it's about never letting go. Critics say it's the most unexpectedly emotional series of the decade. Spoiler: <em>They both chose each other. Every single day.</em>
+    </p>
+    <div class="hero-buttons">
+      <button class="btn-play" onclick="showFinale()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="black"><polygon points="5,3 19,12 5,21"/></svg>
+        Play
+      </button>
+      <button class="btn-more" onclick="showModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12" y2="16.5" stroke-width="3"/></svg>
+        More Info
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- EPISODES -->
+<div class="section">
+  <h2 class="section-title">Episodes</h2>
+  <div class="episodes-list" id="episodes-list"></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FOR CHANDRAJEET — BIRTHDAY WARNING CARD -->
+<div id="warning-section">
+  <h2 class="section-title" style="margin-bottom:16px;">For Chandrajeet 💜</h2>
+  <div class="warning-outer">
+
+    <!-- Netflix-style header -->
+    <div class="warning-header">
+      <span class="warning-header-logo">SHRUTIFLIX</span>
+      <span class="warning-header-title">Content Advisory</span>
+    </div>
+
+    <!-- Warning body -->
+    <div class="warning-body">
+      <div class="warning-label">⚠ VIEWER ADVISORY</div>
+      <div class="warning-title">The following message contains<br>strong feelings. Proceed with care.</div>
+      <div class="warning-advisories">
+        <span class="advisory">Excessive Love</span>
+        <span class="advisory">One Very Loud Girlfriend</span>
+        <span class="advisory">Happy Tears Likely</span>
+        <span class="advisory">Rated: ∞/10</span>
+      </div>
+      <p class="warning-desc">
+        This content has been <strong>personally approved by Shruti</strong> and is intended
+        for audiences aged <strong>Chandrajeet</strong> only. Side effects may include
+        feeling extremely loved, mild embarrassment, and an overwhelming urge to love me more.
+        <br><br>
+        <strong>ShrutiFlix</strong> is not responsible for any happy tears, unexpected hugs,
+        or sudden urges to call Shruti immediately after viewing.
+      </p>
+      <button class="warning-reveal-btn" id="reveal-btn" onclick="revealMessage()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+        I Accept — Show Me the Message
+      </button>
+    </div>
+
+    <!-- Hidden birthday message — revealed on click -->
+    <div class="birthday-message-card" id="birthday-message">
+      <div class="msg-from">A personal message from Shruti · For Chandrajeet only</div>
+      <div class="msg-text">
+        <p>Happy Birthday, My Love. ❤️</p>
+        <p>Happy Birthday to the most wonderful person I've ever known. Thankyou for loving me babe. You are the best thing that has ever happend to me. Kitni lucky hu mai. Tujhe pata h tu kitna acha h yaar, sach me. I love you so so so much. </p>
+        <p>I made this entire website just to tell you something I probably don't say enough — <em>you are the best person I have ever known.</em> Not because you're perfect. Because you're perfectly you.</p>
+        <p>You have the most beautiful eyes I've ever seen. Mai itna bolti hu fir bhi sunta h mujhe hmesha, you never made me feel unheard. Thank you so much for that. Also, thank you for handling a psycho like me😂, I know I am not very easy to love, still you are with me and try to understand me. You make me feel safe, and seen, and important — and I don't take that for granted. Not for a single second.</p>
+        <p>Thank you for being my best friend, my partner-in-crime, my shoulder to cry on, and my biggest cheerleader. I love how we can be silly together, how we can talk about anything and everything, and how we can just be ourselves around each other. You make me laugh like no one else can, and you make me feel loved in ways I never knew were possible.</p>
+        <p>And please time time pr merko gaana gakar bhej diya kr yaar, you know na I love your voice.</p>
+        <p>I miss you a lot babe. Pease dont ever become a stranger to me. Mujhe pata hai mai gusse me bhot bol deti hu aur baat krna band krdeti hu, please mujhe mana liya kr. I hate the fights that happen between us. Thank you for being so patient with me.</p>
+        <p>Two years ago, on 24th January, when you proposed I was not sure about you whether it will work or not. I didn't know then how lucky I was. I know now. <em>I am so lucky it's you.</em></p>
+        <p>One more thing, I am really sorry for hurting you knowingly and unknowingly. I want you to be happy always. Bhai rona aa gaya sach me likhte likhte.</p>
+        <p>Here's to you today — the funniest, most patient, most beautiful-eyed human I've ever met. I love you more than I'll ever properly say. But I'm going to keep trying.</p>
+      </div>
+      <div class="msg-sign">— always yours, Shruti ♡</div>
+      <div class="msg-hearts">♡ ♡ ♡</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DETAILS -->
+<div class="section">
+  <h2 class="section-title">About Our Story</h2>
+  <div class="details-grid">
+    <span class="detail-label">Creator</span><span class="detail-val">Shruti</span>
+    <span class="detail-label">Started</span><span class="detail-val">24th January 2024</span>
+    <span class="detail-label">Seasons</span><span class="detail-val">2 (and counting)</span>
+    <span class="detail-label">Genre</span><span class="detail-val">Romance · Comedy · Drama</span>
+    <span class="detail-label">Mood</span><span class="detail-val">Wholesome with a side of chaos</span>
+    <span class="detail-label">Rating</span><span class="detail-val">∞ / 10 — Shruti</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CAST -->
+<div class="section">
+  <h2 class="section-title">Cast & Crew</h2>
+  <div class="cast-grid">
+    <div class="cast-card" onclick="showEpModal(8)">
+      <div class="cast-img">🧑‍💼</div>
+      <div class="cast-name">Chandrajeet</div>
+      <div class="cast-role">The Most Patient Man Alive</div>
+    </div>
+    <div class="cast-card" onclick="showEpModal(9)">
+      <div class="cast-img">👩</div>
+      <div class="cast-name">Shruti</div>
+      <div class="cast-role">Chief Yapper · Producer · Director</div>
+    </div>
+    <div class="cast-card">
+      <div class="cast-img">💜</div>
+      <div class="cast-name">Love</div>
+      <div class="cast-role">Executive Producer</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- LOVE LETTER / MORE INFO MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('modal-overlay').classList.remove('show')">✕</button>
+    <div class="modal-hero">
+      <span style="font-size:64px;">💌</span>
+      <div class="modal-hero-text">
+        <h2>Our Story</h2>
+        <p>Season 2 · A ShrutiFlix Original</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <span class="modal-match">Shruti's #1 Pick</span>
+        <span class="modal-year">2023–Present</span>
+        <span style="border:1px solid #555;color:#aaa;font-size:11px;padding:1px 6px;">2 Seasons</span>
+      </div>
+      <div class="modal-btns">
+        <button class="modal-btn-play" onclick="showFinale()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="black"><polygon points="5,3 19,12 5,21"/></svg>
+          Play
+        </button>
+        <button class="modal-btn-list" onclick="document.getElementById('modal-overlay').classList.remove('show')">✕ Close</button>
+      </div>
+      <p class="modal-desc">
+        When a girl who talks too much meets a boy with the most beautiful eyes she has ever seen — something quietly extraordinary begins. <em>Our Story</em> is the only series where the lead character is very innocent and kind, never starts a fight, and somehow loves all of her chaos anyway.<br><br>
+        Two and a half years in, and this story keeps getting better with every episode. The writing? Honest. The chemistry? Unmatched. The ending? Still being written — and Shruti wouldn't have it any other way.<br><br>
+        <em>Happy Birthday, Chandrajeet. You are the best thing that ever happened to me.</em>
+      </p>
+      <div class="modal-tags">
+        <span class="modal-tag">Romantic</span>
+        <span class="modal-tag">Emotional</span>
+        <span class="modal-tag">Funny</span>
+        <span class="modal-tag">Real Love</span>
+        <span class="modal-tag">Chaotic Good</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EPISODE DETAIL MODAL -->
+<div class="ep-modal-overlay" id="ep-modal-overlay" onclick="closeEpModal(event)">
+  <div class="ep-modal">
+    <button class="modal-close" onclick="document.getElementById('ep-modal-overlay').classList.remove('show')" style="position:absolute;top:12px;right:12px;">✕</button>
+    <span class="ep-modal-emoji" id="ep-modal-emoji">💜</span>
+    <p class="ep-modal-ep" id="ep-modal-ep">EPISODE 1</p>
+    <h3 class="ep-modal-title" id="ep-modal-title"></h3>
+    <p class="ep-modal-desc" id="ep-modal-desc"></p>
+    <button class="ep-modal-close" onclick="document.getElementById('ep-modal-overlay').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<!-- BIRTHDAY FINALE -->
+<div id="birthday-finale">
+  <div class="finale-logo">ShrutiFlix</div>
+  <div class="finale-heart">💜</div>
+  <div class="finale-title">Happy Birthday,<br>Chandrajeet.</div>
+  <div class="finale-sub">
+    You are the person who makes ordinary days feel like something worth remembering.<br><br>
+    Your smile, your patience, your beautiful eyes, your hugs, your love — it all adds up to something I never want to let go of.<br><br>
+    <em>Two and a half years down. Infinite more to go. You are my favourite story, and I am so glad I get to be in it.</em>
+  </div>
+  <div class="finale-sign">— with infinite love, Shruti ♡</div>
+  <button class="finale-close" onclick="document.getElementById('birthday-finale').classList.remove('show')">← Back to Our Story</button>
+</div>
+
+<script>
+// ── NETFLIX INTRO + TA-DUM SOUND ──────────────────────
+function playTaDum() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function note(freq, start, dur, vol=0.4, type='sine') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
+      gain.gain.setValueAtTime(0, ctx.currentTime + start);
+      gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+      osc.start(ctx.currentTime + start);
+      osc.stop(ctx.currentTime + start + dur + 0.05);
+    }
+
+    // ta — low dramatic hit
+    note(58,  0,    0.55, 0.5,  'sawtooth');
+    note(58,  0,    0.55, 0.3,  'sine');
+    note(116, 0,    0.4,  0.15, 'sine');
+
+    // dum — higher resonant note
+    note(185, 0.55, 0.9,  0.55, 'sawtooth');
+    note(185, 0.55, 0.9,  0.3,  'sine');
+    note(370, 0.55, 0.7,  0.18, 'sine');
+
+    // rumble beneath both
+    note(40,  0,    1.5,  0.2,  'sawtooth');
+  } catch(e) {}
+}
+
+function skipIntro() {
+  const el = document.getElementById('intro-screen');
+  el.classList.add('fade-out');
+  setTimeout(() => {
+    el.remove();
+    showProfileScreen();
+  }, 800);
+}
+
+function showProfileScreen() {
+  const ps = document.getElementById('profile-screen');
+  ps.classList.add('visible');
+  requestAnimationFrame(() => requestAnimationFrame(() => ps.classList.add('show')));
+}
+
+const profileMessages = {
+  chandrajeet: {
+    emoji: '🎂',
+    msg: 'Happy Birthday, Chandrajeet! 🎉\nThis one\'s made just for you. Enjoy every second.'
+  },
+  shruti: {
+    emoji: '😏',
+    msg: 'Shruti? Really? You\'re supposed to be Chandrajeet.\nBut okay, go ahead — you made this anyway. 😂'
+  }
+};
+
+function selectProfile(id) {
+  // flash animation
+  const cards = document.querySelectorAll('.profile-card');
+  cards.forEach(c => { if(c.onclick.toString().includes(id)) c.classList.add('selected'); });
+
+  // show toast
+  const data = profileMessages[id];
+  document.getElementById('profile-toast-emoji').textContent = data.emoji;
+  document.getElementById('profile-toast-msg').innerHTML = data.msg.replace(/\n/g,'<br>');
+  const toast = document.getElementById('profile-toast');
+  toast.classList.add('show');
+
+  // after toast — hide profile screen, reveal site
+  setTimeout(() => {
+    toast.classList.remove('show');
+    const ps = document.getElementById('profile-screen');
+    ps.style.transition = 'opacity 0.6s ease';
+    ps.style.opacity = '0';
+    setTimeout(() => ps.remove(), 600);
+  }, 2200);
+}
+
+window.addEventListener('load', () => {
+  setTimeout(playTaDum, 300);
+  setTimeout(skipIntro, 3200);
+});
+
+// ── PHOTO CONFIG ─────────────────────────────────────
+// Put your photos in the same folder as this HTML file.
+// Name them exactly as listed below, then save & refresh.
+const HERO_PHOTO     = 'hero.jpg';       // main banner photo (landscape works best)
+const EPISODE_PHOTOS = [
+  'ep_1.jpg',   // Pilot — The Beginning
+  'ep2.jpeg',   // The 3AM Episode
+  'ep3.jpeg',   // Maggi at Midnight
+  'ep4.jpeg',   // The Fight (ft. Shruti)
+  'ep5.jpeg',   // The Hug That Fixed Everything
+  'ep6.jpg'  // The Way He Looks At Her
+];
+
+const EPISODE_VIDEOS = [
+  'beginning.mp4',
+  'vcs.mp4',
+  'trips.mp4',
+  'cute.mp4',
+  'singer.mp4',
+  'hbd.mp4'
+];
+
+// ─────────────────────────────────────────────────────
+
+const episodes = [
+  {
+    emoji:"💬", bg:"#1a0a1a",
+    title:"The Beginning",
+    duration:"Season 1",
+    short:"Where it all started.",
+    desc:"Nobody warned her that a single conversation could change everything. He listened. He laughed at the right moments. He had those eyes. By the time the night was over, she already knew this was going to be her favourite story."
+  },
+  {
+    emoji:"🌙", bg:"#0a0a1a",
+    title:"The VideoCalls",
+    duration:"Season 1",
+    short:"The calls that never ended.",
+    desc:"They were supposed to say goodnight at 11. They didn't. Hours passed like minutes. No topic was off-limits, no silence was awkward. This is the episode fans call 'the one that made it real.'"
+  },
+  {
+    emoji:"🤝", bg:"#0a1a0a",
+    title:"The Trips",
+    duration:"Season 1",
+    short:"The trips that made us closer.",
+    desc:"From the first trip to the last, every journey was a story in itself. The laughter, the arguments, the quiet moments — they all added up to something bigger than just a vacation. This episode is a love letter to every trip that brought us closer."
+  },
+  {
+    emoji:"🤗", bg:"#1a0a0a",
+    title:"Some cute moments",
+    duration:"Season 1",
+    short:"No words needed.",
+    desc:"Sometimes, the best moments are the ones where no words are spoken. Just being together, in the same space, was enough. This episode captures those quiet moments that define a relationship."
+  },
+  {
+    emoji:"👀", bg:"#0d0d1a",
+    title:"Certified Singer",
+    duration:"Season 2",
+    short:"do I have to drop my heart here?",
+    desc:"When she sang, he listened. When he sang, she smiled. Music became their language, and every note was a testament to their bond. This episode is a celebration of the songs that played in the background of their love story."
+  },
+  {
+    emoji:"🎂", bg:"#1a0010",
+    title:"Season 2 Finale — Happy Birthday",
+    duration:"Today",
+    short:"The most important episode.",
+    desc:"After two seasons of laughter, late nights and love — here we are. This episode is a love letter disguised as a birthday. Press play on the hero to watch the full finale. Tissues recommended."
+  },
+];
+
+const moreCards = [
+  {emoji:"🌟",bg:"#1a1a0a",title:"The Best Person",sub:"A documentary"},
+  {emoji:"😂",bg:"#0a1a1a",title:"She Started It",sub:"Comedy · 1 Season"},
+  {emoji:"🌙",bg:"#0a0a1a",title:"Late Night Calls",sub:"Drama · Ongoing"},
+  {emoji:"🤝",bg:"#0d0a1a",title:"Always There",sub:"A True Story"},
+  {emoji:"✨",bg:"#1a0a0a",title:"Beautiful Eyes",sub:"Short Film"},
+  {emoji:"♾️",bg:"#0a1a0a",title:"Infinite Reasons",sub:"Series · Ongoing"},
+];
+
+const castExtra = [
+  {
+    emoji:"🧑‍💼", ep:"CAST",
+    title:"Chandrajeet",
+    desc:"Patient, honest, loyal, and somehow still standing after two years with Shruti. Makes the world's best maggi. Has the most beautiful eyes. Never starts fights. The real MVP of this series."
+  },
+  {
+    emoji:"👩", ep:"CAST",
+    title:"Shruti",
+    desc:"The yapper. The chaos agent. The one who starts the fights and also the one who loves hardest. Creator, director, and biggest fan of this series. Chose Chandrajeet — every single day."
+  },
+];
+
+// Set hero background photo (falls back to gradient if file missing)
+(function(){
+  const heroBg = document.getElementById('hero-bg');
+  const img = new Image();
+  img.onload = () => {
+    heroBg.style.backgroundImage = `
+      linear-gradient(to right, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.15) 80%),
+      linear-gradient(to top, rgba(20,20,20,1) 0%, rgba(20,20,20,0.3) 30%, transparent 60%),
+      url('${HERO_PHOTO}')`;
+    heroBg.style.backgroundSize = 'cover';
+    heroBg.style.backgroundPosition = 'center top';
+  };
+  img.src = HERO_PHOTO;
+})();
+
+// Render episodes with photo thumbnails (emoji fallback if photo missing)
+const epList = document.getElementById('episodes-list');
+episodes.forEach((ep, i) => {
+  const photo = EPISODE_PHOTOS[i] || '';
+  const div = document.createElement('div');
+  div.className = 'ep';
+  div.onclick = () => showEpModal(i);
+
+  // Build thumbnail — try photo first, emoji fallback
+  const thumbId = `ep-thumb-${i}`;
+  div.innerHTML = `
+    <div class="ep-num">${i+1}</div>
+    <div class="ep-thumb" id="${thumbId}">
+      <div class="ep-thumb-bg" style="background:${ep.bg};position:absolute;inset:0;"></div>
+      <span class="ep-thumb-emoji ep-thumb-fallback">${ep.emoji}</span>
+      <div class="ep-play">
+        <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+    </div>
+    <div class="ep-info">
+      <div class="ep-header">
+        <span class="ep-name">${ep.title}</span>
+        <span class="ep-duration">${ep.duration}</span>
+      </div>
+      <p class="ep-desc">${ep.short}</p>
+    </div>`;
+  epList.appendChild(div);
+
+  // Try loading the photo — if it loads, inject it over the emoji
+  if (photo) {
+    const img = new Image();
+    img.onload = () => {
+      const thumb = document.getElementById(thumbId);
+      const fallback = thumb.querySelector('.ep-thumb-fallback');
+      if (fallback) fallback.style.display = 'none';
+      const photoEl = document.createElement('img');
+      photoEl.src = photo;
+      photoEl.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;';
+      thumb.insertBefore(photoEl, thumb.querySelector('.ep-play'));
+    };
+    img.src = photo;
+  }
+});
+
+// Render more like this
+const moreGrid = document.getElementById('more-grid');
+moreCards.forEach(c => {
+  const div = document.createElement('div');
+  div.className = 'more-card';
+  div.innerHTML = `
+    <div class="more-thumb" style="background:${c.bg};">
+      <span>${c.emoji}</span>
+      <div class="more-overlay">
+        <div class="more-title">${c.title}</div>
+        <div class="more-sub">${c.sub}</div>
+      </div>
+    </div>`;
+  moreGrid.appendChild(div);
+});
+
+// Floating hearts on hero
+const hearts = document.getElementById('hero-hearts');
+['💜','❤️','✨','💕','♡'].forEach((h, i) => {
+  const span = document.createElement('span');
+  span.className = 'floating-heart';
+  span.textContent = h;
+  span.style.cssText = `left:${10+i*18}%;font-size:${14+i*4}px;animation-duration:${8+i*3}s;animation-delay:${i*1.5}s;`;
+  hearts.appendChild(span);
+});
+
+// Episode modal
+const allItems = [...episodes, ...castExtra];
+
+// Birthday message reveal
+function revealMessage() {
+  document.getElementById('reveal-btn').style.display = 'none';
+  const msg = document.getElementById('birthday-message');
+  msg.classList.add('show');
+  setTimeout(() => msg.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+}
+
+
+function showEpModal(i) {
+  if(i < episodes.length){
+    const video=document.getElementById('episodeVideo');
+    const source=document.getElementById('videoSource');
+    source.src=EPISODE_VIDEOS[i];
+    video.load();
+    document.getElementById('videoModal').style.display='flex';
+    video.play().catch(()=>{});
+    return;
+  }
+  const item = allItems[i];
+  if (!item) return;
+  document.getElementById('ep-modal-emoji').textContent = item.emoji;
+  document.getElementById('ep-modal-ep').textContent = item.ep || `EPISODE ${i+1}`;
+  document.getElementById('ep-modal-title').textContent = item.title;
+  document.getElementById('ep-modal-desc').textContent = item.desc;
+  document.getElementById('ep-modal-overlay').classList.add('show');
+}
+
+function closeVideo(){
+  const video=document.getElementById('episodeVideo');
+  video.pause();
+  video.currentTime=0;
+  document.getElementById('videoModal').style.display='none';
+}
+
+
+function closeEpModal(e) {
+  if (e.target === document.getElementById('ep-modal-overlay'))
+    document.getElementById('ep-modal-overlay').classList.remove('show');
+}
+
+// More info modal
+function showModal() { document.getElementById('modal-overlay').classList.add('show'); }
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay'))
+    document.getElementById('modal-overlay').classList.remove('show');
+}
+
+// Finale
+function showFinale() {
+  document.getElementById('modal-overlay').classList.remove('show');
+  document.getElementById('birthday-finale').classList.add('show');
+}
+</script>
+
+<div id="videoModal" class="video-modal">
+  <span class="close-video" onclick="closeVideo()">&times;</span>
+  <video id="episodeVideo" controls>
+    <source id="videoSource" src="" type="video/mp4">
+  </video>
+</div>
+
+</body>
+</html>
